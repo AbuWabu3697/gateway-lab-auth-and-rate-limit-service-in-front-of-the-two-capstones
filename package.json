@@ -1,0 +1,24 @@
+{
+  "name": "gateway-lab",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Fastify API gateway with JWT auth and Redis token-bucket rate limiting",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@fastify/http-proxy": "^9.4.0",
+    "fastify": "^4.28.1",
+    "ioredis": "^5.3.2",
+    "jose": "^5.3.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "ioredis-mock": "^8.9.0",
+    "vitest": "^1.6.0"
+  }
+}
