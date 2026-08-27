@@ -13,6 +13,7 @@
   "dependencies": {
     "@fastify/http-proxy": "^9.4.0",
     "fastify": "^4.28.1",
+    "fastify-plugin": "^6.0.0",
     "ioredis": "^5.3.2",
     "jose": "^5.3.0",
     "uuid": "^9.0.0"
