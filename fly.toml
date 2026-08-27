@@ -1,0 +1,53 @@
+app = "gateway-lab"
+primary_region = "ord"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3000"
+  HOST = "0.0.0.0"
+  LOG_LEVEL = "info"
+  RATE_LIMIT_CAPACITY = "100"
+  RATE_LIMIT_WINDOW_SECS = "60"
+  CB_WINDOW_SIZE = "10"
+  CB_ERROR_THRESHOLD = "0.5"
+  CB_OPEN_DURATION_MS = "30000"
+
+[[services]]
+  internal_port = 3000
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 200
+    soft_limit = 100
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "5s"
+
+  [[services.http_checks]]
+    interval = "15s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/health"
+    protocol = "http"
+
+# Secrets to set via `fly secrets set`:
+#   JWKS_URI            URL of the JWKS endpoint
+#   REDIS_URL           Redis connection string (use a Fly Redis attachment)
+#   LEDGER_UPSTREAM     http://ledger-service.internal:8080
+#   NOTIFY_UPSTREAM     http://notify-service.internal:8080
+#   JWT_ISSUER          (optional) expected iss claim
+#   JWT_AUDIENCE        (optional) expected aud claim
